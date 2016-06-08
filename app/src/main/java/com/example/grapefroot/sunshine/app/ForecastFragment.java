@@ -2,6 +2,7 @@ package com.example.grapefroot.sunshine.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
@@ -54,6 +55,10 @@ public class ForecastFragment extends Fragment {
             FetchWeatherTask task = new FetchWeatherTask();
             task.execute("94043");
             return true;
+        } else if (item.getItemId() == R.id.action_settings) {
+            Intent launchSettingsIntent = new Intent(getActivity(),
+                    SettingsActivity.class);
+            startActivity(launchSettingsIntent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -92,9 +97,11 @@ public class ForecastFragment extends Fragment {
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), arrayAdapter.getItem(position), Toast
-                        .LENGTH_SHORT)
-                        .show();
+                Intent detailActivityIntent = new Intent(
+                        getActivity(), DetailActivity.class);
+                detailActivityIntent.setData(Uri.parse(arrayAdapter.getItem
+                        (position)));
+                startActivity(detailActivityIntent);
             }
         });
 
