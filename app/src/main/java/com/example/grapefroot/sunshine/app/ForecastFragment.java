@@ -1,5 +1,7 @@
 package com.example.grapefroot.sunshine.app;
 
+import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
@@ -13,8 +15,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -85,6 +89,14 @@ public class ForecastFragment extends Fragment {
                 (ListView) rootView.findViewById(R.id.listview_forecast);
 
         view.setAdapter(arrayAdapter);
+        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getActivity(), arrayAdapter.getItem(position), Toast
+                        .LENGTH_SHORT)
+                        .show();
+            }
+        });
 
         // These two need to be declared outside the try/catch
 // so that they can be closed in the finally block.
@@ -188,9 +200,9 @@ public class ForecastFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String[] strings) {
-            if(strings != null) {
+            if (strings != null) {
                 arrayAdapter.clear();
-                for(String forecastString: strings) {
+                for (String forecastString : strings) {
                     arrayAdapter.add(forecastString);
                 }
             }
